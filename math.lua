@@ -1,15 +1,28 @@
 local Math = {}
 Math.__index = Math
 
-
-
------- VECTOR2D ------
+-------- DEFINITIONS --------
 --- @class Vector2D
 --- @field x number
 --- @field y number
 local Vector2D = {}
 Vector2D.__index = Vector2D
 
+------ METHODS -------
+--- Return FPS
+---@param dt number
+---@return number
+function Math.fps(dt)
+    return 1 / dt
+end
+-- Return FPS rounded
+---@param dt number
+---@return number
+function Math.ffps(dt)
+    return math.floor(1 / dt)
+end
+
+------ VECTOR2D ------
 --- constructor
 --- @param x number?
 --- @param y number?

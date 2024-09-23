@@ -2,6 +2,21 @@ local Component = {}
 Component.__index = Component
 
 
+-------- REGISTER ---------
+--- @class Rect
+--- @field x number
+--- @field y number
+--- @field width number
+--- @field height number
+local Rect = {}
+Rect.__index = Rect
+
+local Group = {}
+Group.__index = Group
+
+local Sprite = {}
+Sprite.__index = Sprite
+
 
 ------ IMPORTS ------
 local llove_root = (...):gsub('%.component$', '')
@@ -11,14 +26,6 @@ local Axis = require(llove_root .. ".util").Axis
 
 
 ------ RECT --------
---- @class Rect
---- @field x number
---- @field y number
---- @field width number
---- @field height number
-local Rect = {}
-Rect.__index = Rect
-
 -- constructor
 --- @param x number
 --- @param y number
@@ -185,20 +192,40 @@ end
 
 
 ------ SPRITE ------
-local Sprite = {}
-Sprite.__index = Sprite
-
 -- constructor
 function Sprite:new(groups)
     local instance = {
-        _groups = groups or {}
+        _groups = {}
     }
-    return setmetatable(instance, Sprite)
+    instance = setmetatable(instance, Sprite)
+    -- register groups
+    for _, group in ipairs(groups) do
+        Sprite.addGroup(instance, group)
+    end
+    return instance
 end
 
 -- add group
+--- @return boolean
 function Sprite:addGroup(group)
+    if getmetatable(group) ~= Group or Sprite.isInGroup(self, group) then
+        return false
+    end
+    return Group.add(group, self)
+end
+function Sprite:_justAddToGroup(group)
     table.insert(self._groups, group)
+end
+
+-- is in group
+--- @return boolean
+function Sprite:isInGroup(group)
+    for i = #self._groups, 1, -1 do
+        if self._groups[i] == group then
+            return true
+        end
+    end
+    return false
 end
 
 -- groups
@@ -224,27 +251,33 @@ function Sprite:hasGroup()
     return #self._groups > 0
 end
 
--- draw
+-- update
 function Sprite:update(dt) end
+-- draw
 function Sprite:draw() end
 
 
 
 ------ GROUP ------
-local Group = {}
-Group.__index = Group
+
 
 -- constructor
-function Group:new(sprites)
+function Group:new()
     local instance = {
-        _sprites = sprites or {}
+        _sprites = {}
     }
     return setmetatable(instance, Group)
 end
 
 -- add sprite
+--- @return boolean
 function Group:add(sprite)
-    table.insert(self._sprites, sprite)
+    if getmetatable(sprite) == Sprite and not Group.has(self, sprite) then
+        Sprite._justAddToGroup(sprite, self)
+        table.insert(self._sprites, sprite)
+        return true
+    end
+    return false
 end
 
 -- sprites
