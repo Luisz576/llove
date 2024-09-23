@@ -1,5 +1,5 @@
-local Component = {}
-Component.__index = Component
+local LLoveComponent = {}
+LLoveComponent.__index = LLoveComponent
 
 
 -------- REGISTER ---------
@@ -334,9 +334,8 @@ end
 
 
 ------ ------
-Component.Rect = Rect
-Component.Sprite = Sprite
-Component.CollidableSprite = CollidableSprite
-Component.Group = Group
+LLoveComponent.Rect = Rect
+LLoveComponent.Sprite = Sprite
+LLoveComponent.Group = Group
 
-return Component
+return LLoveComponent

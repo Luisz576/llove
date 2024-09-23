@@ -1,5 +1,5 @@
-local Math = {}
-Math.__index = Math
+local LLoveMath = {}
+LLoveMath.__index = LLoveMath
 
 -------- DEFINITIONS --------
 --- @class Vector2D
@@ -12,14 +12,25 @@ Vector2D.__index = Vector2D
 --- Return FPS
 ---@param dt number
 ---@return number
-function Math.fps(dt)
+function LLoveMath.fps(dt)
     return 1 / dt
 end
 -- Return FPS rounded
 ---@param dt number
 ---@return number
-function Math.ffps(dt)
+function LLoveMath.ffps(dt)
     return math.floor(1 / dt)
+end
+
+-- return the absolute value
+---@param v number
+---@return number
+function LLoveMath.abs(v)
+    if v >= 0 then
+        return v
+    else
+        return -v
+    end
 end
 
 ------ VECTOR2D ------
@@ -73,6 +84,6 @@ end
 
 
 -----------
-Math.Vector2D = Vector2D
+LLoveMath.Vector2D = Vector2D
 
-return Math
+return LLoveMath

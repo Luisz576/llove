@@ -1,6 +1,24 @@
-local Util = {}
-Util.__index = Util
+local LLoveUtil = {}
+LLoveUtil.__index = LLoveUtil
 
+
+------ Methods -------
+function LLoveUtil.cloneArray(arr)
+    local copy = {}
+    for i=1, #arr do
+        copy[i] = arr[i]
+    end
+    return copy
+end
+
+function LLoveUtil.cloneTable(table)
+    local copy = {}
+    copy.__index = table.__index
+    for k, v in pairs(table) do
+        table[k] = v
+    end
+    return setmetatable(copy, getmetatable(table))
+end
 
 
 ------ AXIS ------
@@ -30,7 +48,7 @@ local Direction = {
 
 
 --------
-Util.Axis = Axis
-Util.Direction = Direction
+LLoveUtil.Axis = Axis
+LLoveUtil.Direction = Direction
 
-return Util
+return LLoveUtil
