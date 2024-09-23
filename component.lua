@@ -233,6 +233,17 @@ function Sprite:groups()
     return self._groups
 end
 
+-- get group
+--- @param name string
+function Sprite:getGroup(name)
+    for i = #self._groups, 1, -1 do
+        if self._groups[i].name == name then
+            return self._groups[i]
+        end
+    end
+    return nil
+end
+
 -- remove group
 --- @return boolean
 function Sprite:removeGroup(group)
@@ -259,11 +270,10 @@ function Sprite:draw() end
 
 
 ------ GROUP ------
-
-
 -- constructor
-function Group:new()
+function Group:new(name)
     local instance = {
+        name = name,
         _sprites = {}
     }
     return setmetatable(instance, Group)
