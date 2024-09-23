@@ -1,4 +1,5 @@
-local Vector2D = require "game.utils.vector2d"
+local llove_root = (...):gsub('%.component.rect$', '')
+local Vector2D = require(llove_root .. ".math.vector2d")
 
 --- @class Rect
 --- @field x number
