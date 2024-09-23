@@ -1,3 +1,9 @@
+local Math = {}
+Math.__index = Math
+
+
+
+------ VECTOR2D ------
 --- @class Vector2D
 --- @field x number
 --- @field y number
@@ -51,4 +57,9 @@ function Vector2D:normalize(x, y)
     return Vector2D:new(x / magnitude, y / magnitude)
 end
 
-return Vector2D
+
+
+-----------
+Math.Vector2D = Vector2D
+
+return Math
