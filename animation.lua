@@ -17,7 +17,7 @@ AnimationGrid.__index = AnimationGrid
 
 ------ ANIMATION ------
 -- constructor
-function Animation:new(frames, speed, loop)
+function Animation:new(frames, speed, scale, loop)
     local instance = {
         index = 1,
         frames = frames or {},
@@ -25,6 +25,7 @@ function Animation:new(frames, speed, loop)
         loop = loop ~= false,
         flippedX = false,
         flippedY = false,
+        scale = scale or 1,
         _deltaFrame = 0
     }
     return setmetatable(instance, Animation)
@@ -124,7 +125,7 @@ end
 function Animation:getDrawInfo(x, y, r, sx, sy, ox, oy, kx, ky)
     local frame = self:frame()
     if self.flippedX or self.flippedY then
-        r, sx, sy, ox, oy, kx, ky = r or 0, sx or 1, sy or 1, ox or 0, oy or 0, kx or 0, ky or 0
+        r, sx, sy, ox, oy, kx, ky = r or 0, sx or self.scale, sy or self.scale, ox or 0, oy or 0, kx or 0, ky or 0
         local _ ,_ , w, h = frame:getViewport()
         if self.flippedX then
             sx = sx * -1
