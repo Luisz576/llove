@@ -258,7 +258,7 @@ end
 function Sprite:removeGroup(group)
     for i = #self._groups, 1, -1 do
         if self._groups[i] == group then
-            table.remove(group, i)
+            table.remove(self._groups, i)
             return true
         end
     end
@@ -315,7 +315,7 @@ end
 function Group:remove(sprite)
     for i = #self._sprites, 1, -1 do
         if self._sprites[i] == sprite then
-            table.remove(sprite, i)
+            table.remove(self._sprites, i)
             return true
         end
     end
