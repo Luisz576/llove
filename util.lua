@@ -3,6 +3,7 @@ LLoveUtil.__index = LLoveUtil
 
 
 ------ Methods -------
+-- clone a array
 function LLoveUtil.cloneArray(arr)
     local copy = {}
     for i=1, #arr do
@@ -11,6 +12,7 @@ function LLoveUtil.cloneArray(arr)
     return copy
 end
 
+-- Clone a table
 function LLoveUtil.cloneTable(table)
     local copy = {}
     copy.__index = table.__index
@@ -18,6 +20,11 @@ function LLoveUtil.cloneTable(table)
         table[k] = v
     end
     return setmetatable(copy, getmetatable(table))
+end
+
+-- concatenate things
+function LLoveUtil.concatAll(s, ...)
+    return table.concat({...}, s or '')
 end
 
 

@@ -81,6 +81,89 @@ function Vector2D:normalize(x, y)
     return Vector2D:new(x / magnitude, y / magnitude)
 end
 
+-- operator add
+Vector2D.__add = function (a, b)
+    if type(a) == "table" and type(b) == "number" then
+        return Vector2D:new(a.x + b, a.y + b)
+    elseif type(a) == "table" and type(b) == "table" then
+        return Vector2D:new(a.x + b.x, a.y + b.y)
+    elseif type(a) == "number" and type(b) == "table" then
+        return Vector2D:new(b.x + a, b.y + a)
+    else
+        error("Invalid Add Operation: '" .. type(a) .. "' + '" .. type(b) .. "'")
+    end
+end
+
+-- operator sub
+Vector2D.__sub = function (a, b)
+    if type(a) == "table" and type(b) == "number" then
+        return Vector2D:new(a.x - b, a.y - b)
+    elseif type(a) == "table" and type(b) == "table" then
+        return Vector2D:new(a.x - b.x, a.y - b.y)
+    elseif type(a) == "number" and type(b) == "table" then
+        return Vector2D:new(b.x - a, b.y - a)
+    else
+        error("Invalid Sub Operation: '" .. type(a) .. "' - '" .. type(b) .. "'")
+    end
+end
+
+-- operator mul
+Vector2D.__mul = function (a, b)
+    if type(a) == "table" and type(b) == "number" then
+        return Vector2D:new(a.x * b, a.y * b)
+    elseif type(a) == "table" and type(b) == "table" then
+        return Vector2D:new(a.x * b.x, a.y * b.y)
+    elseif type(a) == "number" and type(b) == "table" then
+        return Vector2D:new(b.x * a, b.y * a)
+    else
+        error("Invalid Mul Operation: '" .. type(a) .. "' * '" .. type(b) .. "'")
+    end
+end
+
+-- operator div
+Vector2D.__div = function (a, b)
+    if type(a) == "table" and type(b) == "number" then
+        return Vector2D:new(a.x / b, a.y / b)
+    elseif type(a) == "table" and type(b) == "table" then
+        return Vector2D:new(a.x / b.x, a.y / b.y)
+    elseif type(a) == "number" and type(b) == "table" then
+        return Vector2D:new(b.x / a, b.y / a)
+    else
+        error("Invalid Div Operation: '" .. type(a) .. "' / '" .. type(b) .. "'")
+    end
+end
+
+-- operator mod
+Vector2D.__mod = function (a, b)
+    if type(a) == "table" and type(b) == "number" then
+        return Vector2D:new(a.x % b, a.y % b)
+    elseif type(a) == "table" and type(b) == "table" then
+        return Vector2D:new(a.x % b.x, a.y % b.y)
+    elseif type(a) == "number" and type(b) == "table" then
+        return Vector2D:new(b.x % a, b.y % a)
+    else
+        error("Invalid Mod Operation: '" .. type(a) .. "' % '" .. type(b) .. "'")
+    end
+end
+
+-- operator pow
+Vector2D.__pow = function (a, b)
+    if type(a) == "table" and type(b) == "number" then
+        return Vector2D:new(a.x ^ b, a.y ^ b)
+    elseif type(a) == "table" and type(b) == "table" then
+        return Vector2D:new(a.x ^ b.x, a.y ^ b.y)
+    elseif type(a) == "number" and type(b) == "table" then
+        return Vector2D:new(b.x ^ a, b.y ^ a)
+    else
+        error("Invalid Pow Operation: '" .. type(a) .. "' ^ '" .. type(b) .. "'")
+    end
+end
+
+-- operator unm
+Vector2D.__unm = function (a)
+    return Vector2D:new(a.x * -1, a.y * -1)
+end
+
 
 
 -----------
