@@ -96,6 +96,22 @@ function Animation:size()
     return #self.frames
 end
 
+-- is first frame
+function Animation:isFirstFrame()
+    return self.index == 1
+end
+
+-- is frame
+---@param index integer frame index
+function Animation:isFrame(index)
+    return self.index == index
+end
+
+-- is last frame
+function Animation:isLastFrame()
+    return self.index == #self.frames
+end
+
 -- get current frame
 function Animation:frame()
     return self.frames[self.index]
