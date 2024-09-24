@@ -101,6 +101,11 @@ function Animation:frame()
     return self.frames[self.index]
 end
 
+-- remaining frames
+function Animation:remainingFrames()
+    return #self.frames - self.index
+end
+
 -- insert frame
 --- @param frame any
 --- @param pos integer nil to insert at end

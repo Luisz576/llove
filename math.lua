@@ -51,6 +51,20 @@ function Vector2D:zero()
     return Vector2D:new(0, 0)
 end
 
+-- say if it's zero
+function Vector2D:isZero()
+    return self.x == 0 and self.y == 0
+end
+
+-- set values
+---@param x number
+---@param y number
+function Vector2D:set(x, y)
+    self.x = x or 0
+    self.y = y or 0
+    return self
+end
+
 -- copy
 function Vector2D:copy()
     return Vector2D:new(self.x, self.y)

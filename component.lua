@@ -8,11 +8,12 @@ LLoveComponent.__index = LLoveComponent
 --- @field y number
 --- @field width number
 --- @field height number
-local Rect = {}
-Rect.__index = Rect
 
 local Group = {}
 Group.__index = Group
+
+local Rect = {}
+Rect.__index = Rect
 
 local Sprite = {}
 Sprite.__index = Sprite
@@ -206,8 +207,6 @@ function Rect:collideSomePoint(points)
 end
 
 --- Collide Rect
---- @param rect Rect
---- @return boolean
 function Rect:collideRect(rect)
     local leftTop = self:leftTop()
     local rightBottom = self:rightBottom()
@@ -215,8 +214,6 @@ function Rect:collideRect(rect)
 end
 
 --- Collide Some Rect
---- @param rects Rect[]
---- @return boolean
 function Rect:collideSomeRect(rects)
     local leftTop = self:leftTop()
     local rightBottom = self:rightBottom()
