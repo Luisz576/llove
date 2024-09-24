@@ -49,6 +49,26 @@ function LLoveUtil.cloneTable(table)
     return setmetatable(copy, getmetatable(table))
 end
 
+-- Table contains
+function LLoveUtil.tableContains(table, value)
+    for _, v in pairs(table) do
+        if v == value then
+            return true
+        end
+    end
+    return false
+end
+
+-- Table contains
+function LLoveUtil.ifTableContainsRemove(t, value)
+    for k, v in pairs(t) do
+        if v == value then
+            return table.remove(t, k)
+        end
+    end
+    return nil
+end
+
 -- concatenate things
 function LLoveUtil.concatAll(s, ...)
     return table.concat({...}, s or '')
