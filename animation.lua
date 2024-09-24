@@ -38,6 +38,24 @@ function Animation:new(frames, speed, scale, loop)
     return setmetatable(instance, self)
 end
 
+-- set loop
+function Animation:setLoop(loop)
+    self.loop = loop
+    return self
+end
+
+-- flip x
+function Animation:flipX()
+    self.flippedX = not self.flippedX
+    return self
+end
+
+-- flip y
+function Animation:flipY()
+    self.flippedY = not self.flippedY
+    return self
+end
+
 -- next frame
 function Animation:next()
     self.index = self.index + 1

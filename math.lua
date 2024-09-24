@@ -2,6 +2,10 @@ local LLoveMath = {}
 LLoveMath.__index = LLoveMath
 
 -------- DEFINITIONS --------
+--- @class Point2D
+--- @field x number
+--- @field y number
+
 --- @class Vector2D
 --- @field x number
 --- @field y number
@@ -20,6 +24,14 @@ end
 ---@return number
 function LLoveMath.ffps(dt)
     return math.floor(1 / dt)
+end
+
+-- Distance between two points
+---@param a Point2D
+---@param b Point2D
+---@return number
+function LLoveMath.pointsDis(a, b)
+    return math.sqrt(((a.x - b.x) ^ 2) + ((a.y - b.y) ^ 2))
 end
 
 ------ VECTOR2D ------
