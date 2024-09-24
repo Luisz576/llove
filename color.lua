@@ -41,6 +41,11 @@ function Color.getRBGA(color)
     return color[1], color[2], color[3], color[4]
 end
 
+-- to string
+function Color.__tostring(c)
+    return "r: " .. c.r .. " g: " .. c.g .. " b: " .. c.b .. " a: " .. c.a
+end
+
 
 
 ------- COLORS --------

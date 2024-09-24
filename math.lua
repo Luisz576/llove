@@ -22,17 +22,6 @@ function LLoveMath.ffps(dt)
     return math.floor(1 / dt)
 end
 
--- return the absolute value
----@param v number
----@return number
-function LLoveMath.abs(v)
-    if v >= 0 then
-        return v
-    else
-        return -v
-    end
-end
-
 ------ VECTOR2D ------
 --- constructor
 --- @param x number?
@@ -42,7 +31,7 @@ function Vector2D:new(x, y)
         x = x or 0,
         y = y or 0
     }
-    return setmetatable(instance, Vector2D)
+    return setmetatable(instance, self)
 end
 
 -- explicit zero constructor
@@ -162,6 +151,11 @@ end
 -- operator unm
 Vector2D.__unm = function (a)
     return Vector2D:new(a.x * -1, a.y * -1)
+end
+
+-- to string
+Vector2D.__tostring = function (a)
+    return "x: " .. a.x .. " y: " .. a.y
 end
 
 

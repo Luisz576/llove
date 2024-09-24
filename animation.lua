@@ -35,7 +35,7 @@ function Animation:new(frames, speed, scale, loop)
         scale = scale or 1,
         _deltaFrame = 0
     }
-    return setmetatable(instance, Animation)
+    return setmetatable(instance, self)
 end
 
 -- next frame
@@ -176,7 +176,7 @@ function AnimationGrid:new(frameWidth, frameHeight, spriteWidth, spriteHeight, l
         _key = concatAll(frameWidth, frameHeight, spriteWidth, spriteHeight, left, top, border)
     }
 
-    return setmetatable(instance, AnimationGrid)
+    return setmetatable(instance, self)
 end
 
 -- get or create new frame
@@ -289,7 +289,7 @@ function AnimationController:new(animations, startAnimation, playing)
             end
         end
     end
-    return setmetatable(instance, AnimationController)
+    return setmetatable(instance, self)
 end
 
 -- play or resume current animation or other animation

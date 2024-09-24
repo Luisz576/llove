@@ -38,7 +38,7 @@ function Rect:new(x, y, width, height)
         width = width,
         height = height
     }
-    return setmetatable(instance, Rect)
+    return setmetatable(instance, self)
 end
 
 -- constructor based on center
@@ -198,18 +198,15 @@ end
 
 ------ SPRITE ------
 -- constructor
-function Sprite:new(groups)
+function Sprite:new(groups, z)
     local instance = {
+        z = z or 0,
         _groups = {}
     }
-    instance = setmetatable(instance, Sprite)
+    instance = setmetatable(instance, self)
     -- register groups
-    if getmetatable(groups) == Group then
-        Sprite.addGroup(instance, groups)
-    else
-        for _, group in ipairs(groups) do
-            Sprite.addGroup(instance, group)
-        end
+    for _, group in ipairs(groups) do
+        Sprite.addGroup(instance, group)
     end
     return instance
 end
@@ -217,7 +214,7 @@ end
 -- add group
 --- @return boolean
 function Sprite:addGroup(group)
-    if getmetatable(group) ~= Group or Sprite.isInGroup(self, group) then
+    if Sprite.isInGroup(self, group) then
         return false
     end
     return Group.add(group, self)
@@ -285,7 +282,7 @@ function Group:new(name)
         name = name,
         _sprites = {}
     }
-    return setmetatable(instance, Group)
+    return setmetatable(instance, self)
 end
 
 -- add sprite
