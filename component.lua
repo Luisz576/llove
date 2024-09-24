@@ -57,6 +57,11 @@ function Rect:copy()
     return Rect:new(self.x, self.y, self.width, self.height)
 end
 
+-- return a new rect with width and height inflated
+function Rect:inflate(x, y)
+    return Rect:new(self.x + math.floor(x / 2), self.y + math.floor(y / 2), self.width + x, self.height + y)
+end
+
 -- left
 function Rect:left()
     return self.x
@@ -199,8 +204,12 @@ function Sprite:new(groups)
     }
     instance = setmetatable(instance, Sprite)
     -- register groups
-    for _, group in ipairs(groups) do
-        Sprite.addGroup(instance, group)
+    if getmetatable(groups) == Group then
+        Sprite.addGroup(instance, groups)
+    else
+        for _, group in ipairs(groups) do
+            Sprite.addGroup(instance, group)
+        end
     end
     return instance
 end
