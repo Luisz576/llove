@@ -52,6 +52,65 @@ function Rect:newFromCenter(centerX, centerY, width, height)
     return Rect:new(x, y, width, height)
 end
 
+-- update values based on center
+--- @param center {x: number, y:number}
+function Rect:setCenter(center)
+    self.x = center.x - (self.width / 2)
+    self.y = center.y - (self.height / 2)
+    return self
+end
+
+-- update values based on center
+--- @param centerX number
+--- @param centerY number
+function Rect:setCenterXY(centerX, centerY)
+    self.x = centerX - (self.width / 2)
+    self.y = centerY - (self.height / 2)
+    return self
+end
+
+-- update values based on center
+--- @param centerX number
+function Rect:setCenterX(centerX)
+    self.x = centerX - (self.width / 2)
+    return self
+end
+
+-- update values based on center
+--- @param centerY number
+function Rect:setCenterY(centerY)
+    self.y = centerY - (self.height / 2)
+    return self
+end
+
+-- update values based on left
+--- @param left number
+function Rect:setLeft(left)
+    self.x = left
+    return self
+end
+
+-- update values based on right
+--- @param right number
+function Rect:setRight(right)
+    self.x = right - self.width
+    return self
+end
+
+-- update values based on top
+--- @param top number
+function Rect:setTop(top)
+    self.y = top
+    return self
+end
+
+-- update values based on bottom
+--- @param bottom number
+function Rect:setBottom(bottom)
+    self.y = bottom - self.height
+    return self
+end
+
 -- copy
 function Rect:copy()
     return Rect:new(self.x, self.y, self.width, self.height)
@@ -152,32 +211,7 @@ end
 function Rect:collideRect(rect)
     local leftTop = self:leftTop()
     local rightBottom = self:rightBottom()
-    return not (
-        rightBottom.x < rect.x
-        or rightBottom.y < rect.y
-        or leftTop.x > rect:right()
-        or leftTop.y > rect:bottom()
-    )
-end
-
---- Collide Rect In Axis
---- @param rect Rect
---- @param axis string
---- @return boolean
-function Rect:collideRectInAxis(rect, axis)
-    local leftTop = self:leftTop()
-    local rightBottom = self:rightBottom()
-    if axis == Axis.horizontal then
-        return not (
-            rightBottom.x < rect.x
-            or leftTop.x > rect:right()
-        )
-    else
-        return not (
-            rightBottom.y < rect.y
-            or leftTop.y > rect:bottom()
-        )
-    end
+    return rightBottom.x > rect.x and rightBottom.y > rect.y and leftTop.x < rect:right() and leftTop.y < rect:bottom()
 end
 
 --- Collide Some Rect

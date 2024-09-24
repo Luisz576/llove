@@ -6,8 +6,7 @@ LLoveAnimation.__index = LLoveAnimation
 ------ IMPORTS ------
 local love = require "love"
 local llove_root = (...):gsub('%.animation$', '')
-local concatAll = require(llove_root .. ".util").concatAll
-
+local cloneTable = require(llove_root .. ".util").cloneTable
 
 
 ------ DEFINITIONS --------
@@ -190,8 +189,7 @@ function AnimationGrid:new(frameWidth, frameHeight, spriteWidth, spriteHeight, l
         border = border,
         cols = math.floor(spriteWidth/frameWidth),
         rows = math.floor(spriteHeight/frameHeight),
-        _frames = {},
-        _key = concatAll(frameWidth, frameHeight, spriteWidth, spriteHeight, left, top, border)
+        _frames = {}
     }
 
     return setmetatable(instance, self)
@@ -204,14 +202,12 @@ function AnimationGrid:getFrameAndIfItDoesntExistCreateNewFrame(x, y)
     if x < 1 or x > self.cols or y < 1 or y > self.rows then
         error("There's no frame at x: " .. x .. " y: " .. y)
     end
-
     if self._frames[x] == nil then
         self._frames[x] = {}
     end
     if self._frames[x][y] == nil then
         self._frames[x][y] = self:newFrame(x, y)
     end
-
     return self._frames[x][y]
 end
 
@@ -232,8 +228,11 @@ end
 ---@field frameYInterval integer | string
 
 -- get frames
---- @param frameIntervals FrameInterval | FrameInterval[]
+--- @param frameIntervals FrameInterval | FrameInterval[] | nil
 function AnimationGrid:frames(frameIntervals)
+    if frameIntervals == nil then
+        return cloneTable(self._frames)
+    end
     local frames = {}
     if frameIntervals.frameXInterval == nil or frameIntervals.frameYInterval == nil then
         for i=1, #frameIntervals, 1 do
