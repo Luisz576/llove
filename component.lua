@@ -22,7 +22,6 @@ Sprite.__index = Sprite
 ------ IMPORTS ------
 local llove_root = (...):gsub('%.component$', '')
 local Vector2D = require(llove_root .. ".math").Vector2D
-local Axis = require(llove_root .. ".util").Axis
 
 
 
@@ -32,12 +31,14 @@ local Axis = require(llove_root .. ".util").Axis
 --- @param y number
 --- @param width number
 --- @param height number
-function Rect:new(x, y, width, height)
+--- @param angle number | nil In radians
+function Rect:new(x, y, width, height, angle)
     local instance = {
         x = x,
         y = y,
         width = width,
-        height = height
+        height = height,
+        angle = angle
     }
     return setmetatable(instance, self)
 end
@@ -47,10 +48,32 @@ end
 --- @param centerY number
 --- @param width number
 --- @param height number
-function Rect:newFromCenter(centerX, centerY, width, height)
+--- @param angle number | nil In radians
+function Rect:newFromCenter(centerX, centerY, width, height, angle)
     local x = centerX - (width / 2)
     local y = centerY - (height / 2)
-    return Rect:new(x, y, width, height)
+    return Rect:new(x, y, width, height, angle)
+end
+
+-- copy
+function Rect:copy()
+    return Rect:new(self.x, self.y, self.width, self.height, self.angle)
+end
+
+-- return a new rect with width and height inflated
+function Rect:inflate(x, y)
+    return Rect:new(self.x + math.floor(x / 2), self.y + math.floor(y / 2), self.width + x, self.height + y)
+end
+
+-- set angle from degrees
+function Rect:setAngleFromDegrees(degrees)
+    self.angle = math.rad(degrees)
+    return self
+end
+
+-- get angle in degrees
+function Rect:angleInDregrees()
+    return math.deg(self.angle)
 end
 
 -- update values based on center
@@ -110,16 +133,6 @@ end
 function Rect:setBottom(bottom)
     self.y = bottom - self.height
     return self
-end
-
--- copy
-function Rect:copy()
-    return Rect:new(self.x, self.y, self.width, self.height)
-end
-
--- return a new rect with width and height inflated
-function Rect:inflate(x, y)
-    return Rect:new(self.x + math.floor(x / 2), self.y + math.floor(y / 2), self.width + x, self.height + y)
 end
 
 -- left
