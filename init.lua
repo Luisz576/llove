@@ -8,9 +8,10 @@ LLove.__index = LLove
 
 local cwd = (...):gsub('%.init$', '')
 
+LLove.animation = require(cwd .. ".animation")
+LLove.color = require(cwd .. ".color")
 LLove.component = require(cwd .. ".component")
 LLove.math = require(cwd .. ".math")
 LLove.util = require(cwd .. ".util")
-LLove.animation = require(cwd .. ".animation")
 
 return setmetatable({}, LLove)

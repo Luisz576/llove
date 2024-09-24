@@ -2,7 +2,8 @@ local LLoveUtil = {}
 LLoveUtil.__index = LLoveUtil
 
 
------- Methods -------
+
+------ METHODS -------
 -- clone a array
 function LLoveUtil.cloneArray(arr)
     local copy = {}
@@ -26,6 +27,7 @@ end
 function LLoveUtil.concatAll(s, ...)
     return table.concat({...}, s or '')
 end
+
 
 
 ------ AXIS ------
