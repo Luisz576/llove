@@ -299,11 +299,25 @@ end
 function Sprite:removeGroup(group)
     for i = #self._groups, 1, -1 do
         if self._groups[i] == group then
-            table.remove(self._groups, i)
-            return true
+            return Group.remove(group, self)
         end
     end
     return false
+end
+-- remove all groups
+function Sprite:removeFromGroups()
+    for i = #self._groups, 1, -1 do
+        Group.remove(self._groups[i], self)
+    end
+end
+-- handler to just remove in self
+function Sprite:_justRemoveFromGroup(group)
+    for i = #self._groups, 1, -1 do
+        if self._groups[i] == group then
+            table.remove(self._groups, i)
+            return
+        end
+    end
 end
 
 -- is in some group
@@ -356,6 +370,7 @@ end
 function Group:remove(sprite)
     for i = #self._sprites, 1, -1 do
         if self._sprites[i] == sprite then
+            Sprite._justRemoveFromGroup(sprite, self)
             table.remove(self._sprites, i)
             return true
         end
