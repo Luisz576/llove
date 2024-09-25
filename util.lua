@@ -40,13 +40,30 @@ function LLoveUtil.cloneArray(arr)
 end
 
 -- Clone a table
-function LLoveUtil.cloneTable(table)
+function LLoveUtil.cloneTable(t)
     local copy = {}
-    copy.__index = table.__index
-    for k, v in pairs(table) do
-        table[k] = v
+    copy.__index = t.__index
+    for k, v in pairs(t) do
+        copy[k] = v
     end
-    return setmetatable(copy, getmetatable(table))
+    return setmetatable(copy, getmetatable(t))
+end
+
+-- Print table
+function LLoveUtil.printTable(table)
+    print(LLoveUtil.toStringTable(table))
+end
+
+-- Print table
+function LLoveUtil.toStringTable(table)
+    if table == nil or type(table) ~= "table" then
+        return tostring(table)
+    end
+    local str = "{"
+    for k, v in pairs(table) do
+        str = str .. "\n  " .. tostring(k) .. ": " .. tostring(v) .. ","
+    end
+    return str .. "\n}"
 end
 
 -- Table contains
