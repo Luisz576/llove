@@ -34,6 +34,14 @@ function LLoveMath.pointsDis(a, b)
     return math.sqrt(((a.x - b.x) ^ 2) + ((a.y - b.y) ^ 2))
 end
 
+-- ratio between two values
+---@param a number
+---@param b number
+---@return number
+function LLoveMath.ratio(a, b)
+    return a / b
+end
+
 ------ VECTOR2D ------
 --- constructor
 --- @param x number?
