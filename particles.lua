@@ -15,6 +15,7 @@ ParticlesMeta.__index = ParticlesMeta
 
 ---@enum AreaSpreadDistribution
 local AreaSpreadDistribution = {
+    NONE = "none",
     UNIFORM = "uniform",
     NORMAL = "normal",
     -- avaliable after Love2D 0.10.2
