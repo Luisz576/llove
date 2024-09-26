@@ -65,6 +65,21 @@ function Rect:inflate(x, y)
     return Rect:new(self.x + math.floor(x / 2), self.y + math.floor(y / 2), self.width + x, self.height + y)
 end
 
+-- return the size
+---@return { width: number, height: number }
+function Rect:size()
+    return {
+        width = self.width,
+        height = self.height
+    }
+end
+
+-- set new rect size
+function Rect:setSize(width, height)
+    self.width = width
+    self.height = height
+end
+
 -- set angle from degrees
 function Rect:setAngleFromDegrees(degrees)
     self.angle = math.rad(degrees)
@@ -74,6 +89,23 @@ end
 -- get angle in degrees
 function Rect:angleInDregrees()
     return math.deg(self.angle)
+end
+
+-- update x and y
+--- @param x number
+--- @param y number
+function Rect:setXY(x, y)
+    self.x = x
+    self.y = y
+    return self
+end
+
+-- update x and y
+--- @param pos {x: number, y:number}
+function Rect:set(pos)
+    self.x = pos.x
+    self.y = pos.y
+    return self
 end
 
 -- update values based on center
