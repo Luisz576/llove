@@ -46,7 +46,7 @@ function StateMachine:change(state_name)
 end
 
 -- register state
-function StateMachine:register_state(state_name, state)
+function StateMachine:registerState(state_name, state)
     if state_name then
         self.states[state_name] = state
     end
