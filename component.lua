@@ -15,6 +15,9 @@ Group.__index = Group
 local Rect = {}
 Rect.__index = Rect
 
+local Area2D = setmetatable({}, Rect)
+Area2D.__index = Area2D
+
 local Sprite = {}
 Sprite.__index = Sprite
 
@@ -22,6 +25,8 @@ Sprite.__index = Sprite
 ------ IMPORTS ------
 local llove_root = (...):gsub('%.component$', '')
 local Vector2D = require(llove_root .. ".math").Vector2D
+local tableContains = require(llove_root .. ".util").tableContains
+local ifTableContainsRemove = require(llove_root .. ".util").ifTableContainsRemove
 
 
 
@@ -272,6 +277,66 @@ end
 
 
 
+------ Area2D ------
+-- constructor
+---@param parent any
+---@param x number
+---@param y number
+---@param width number
+---@param height number
+function Area2D:new(parent, x, y, width, height, groups, listener, onJoinFunctionName, onExitFunctionName)
+    local instance = Rect:new(x, y, width, height)
+
+    instance.actived = true
+    instance._sprites = {}
+    instance.parent = parent
+    instance.groups = groups or {}
+    instance.listener = listener
+    instance.onJoinFunctionName = onJoinFunctionName
+    instance.onExitFunctionName = onExitFunctionName
+
+    return setmetatable(instance, self)
+end
+
+-- update
+function Area2D:update()
+    if self.actived then
+        local sprites
+        for _, group in pairs(self.groups) do
+            sprites = group:sprites()
+            for _, sprite in pairs(sprites) do
+                if sprite ~= self.parent then
+                    -- sprite join
+                    if self:collideRect(sprite.hitbox) then
+                        if not tableContains(self._sprites, sprite) then
+                            -- save sprite
+                            table.insert(self._sprites, sprite)
+                            if self.onJoinFunctionName ~= nil then
+                                self.listener[self.onJoinFunctionName](self.listener, sprite)
+                            end
+                        end
+                    else
+                        -- sprite exit
+                        if ifTableContainsRemove(self._sprites, sprite) ~= nil then
+                            if self.onExitFunctionName ~= nil then
+                                self.listener[self.onExitFunctionName](self.listener, sprite)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    else
+        for i, sprite in pairs(self._sprites) do
+            table.remove(self._sprites, i)
+            if self.onExitFunctionName ~= nil then
+                self.listener[self.onExitFunctionName](self.listener, sprite)
+            end
+        end
+    end
+end
+
+
 ------ SPRITE ------
 -- constructor
 function Sprite:new(groups, z)
@@ -432,6 +497,7 @@ end
 
 ------ ------
 LLoveComponent.Rect = Rect
+LLoveComponent.Area2D = Area2D
 LLoveComponent.Sprite = Sprite
 LLoveComponent.Group = Group
 
