@@ -29,8 +29,10 @@ function StateMachine:new(states, initial_state_name)
         current_state = nil
     }
     -- register states
-    for state_name, state in pairs(states) do
-        StateMachine.registerState(instance, state_name, state)
+    if states then
+        for state_name, state in pairs(states) do
+            StateMachine.registerState(instance, state_name, state)
+        end
     end
     -- initial state
     if initial_state_name then
