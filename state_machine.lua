@@ -15,7 +15,7 @@ State.__index = State
 
 ------ State ------
 --- enter
-function State:enter() end
+function State:enter(...) end
 --- update
 function State:update(dt) end
 --- exit
@@ -25,9 +25,14 @@ function State:exit() end
 ------ StateMachine ------
 function StateMachine:new(states, initial_state_name)
     local instance = {
-        states = states or {},
+        states = {},
         current_state = nil
     }
+    -- register states
+    for state_name, state in pairs(states) do
+        StateMachine.registerState(instance, state_name, state)
+    end
+    -- initial state
     if initial_state_name then
         StateMachine.change(instance, initial_state_name)
     end
@@ -35,13 +40,13 @@ function StateMachine:new(states, initial_state_name)
 end
 
 -- change
-function StateMachine:change(state_name)
+function StateMachine:change(state_name, ...)
     if self.current_state then
         self.current_state:exit()
     end
     self.current_state = self.states[state_name]
     if self.current_state then
-        self.current_state:enter()
+        self.current_state:enter(...)
     end
 end
 
@@ -49,6 +54,7 @@ end
 function StateMachine:registerState(state_name, state)
     if state_name then
         self.states[state_name] = state
+        self.states[state_name].stateMachine = self
     end
 end
 
